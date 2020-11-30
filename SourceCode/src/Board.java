@@ -72,6 +72,7 @@ public class Board {
             return -1;
 
         }
+        //make sure the intended add isn't to a disconnected square
         boolean adjacents = checkAdjacents(row, col);
         if (adjacents == false) {
             return -1;
