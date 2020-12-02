@@ -74,9 +74,10 @@ public class Board {
         }
         //make sure the intended add isn't to a disconnected square
         boolean adjacents = checkAdjacents(row, col);
-        if (adjacents == false) {
+        if (!adjacents) {
             return -1;
         }
+
         //the intended add is valid, so set the board at the given location to the given color
         board[col][row] = color;
         return 0;
@@ -99,6 +100,19 @@ public class Board {
         }
         return adjacent;
     }
+
+    /*
+     *  This method checks if there are any acceptable moves for the player to make.
+     *  otherwise, the game would be over.
+      */
+    public boolean validMovesLeft(String color) {
+        if(0==0){ // check if the player who's color it is can make any more moves
+            return true;
+        }else {
+            return false;
+        }
+    }
+
 
 
     /*
@@ -130,5 +144,22 @@ public class Board {
             board[row][col] = 1;
         }
     }
+
+    /*
+    * private method that returns true if the board has empty spots left on the board.
+    * otherwise, it returns false.
+    */
+    private boolean hasEmptySpots(int row, int col) {
+        for (int i = row - 1; i < row + 2; i++) {
+            for (int j = col - 1; j < col + 2; j++) {
+                // should place empty spots on the board
+                if(board[i][j] == 0){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
 }

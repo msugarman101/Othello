@@ -1,0 +1,86 @@
+/*
+ * @authors: Elizabeth Wood & Molly Sugarman
+ * @file: Players.java
+ * @description: All things pertaining to the player, such as their color + position
+ */
+
+import java.util.*;
+
+public class Players {
+    int playerNumber, playerCount;
+    String playerColor;
+
+    Scanner input = new Scanner(System.in);
+
+    // Default constructor
+    Players() {
+        playerCount= 0;
+    }
+
+    // Constructor
+    Players(int playerNum,  String playerCol, int playerC) {
+        playerNumber= playerNum;
+        playerColor= playerCol;
+        playerCount = playerC;
+    }
+
+    public String getPlayerColor(){
+        return playerColor;
+    }
+
+
+    public void addPlayerCount(int playerC){
+        playerCount += playerC;
+    }
+
+    public int getPlayerCount(){
+        return playerCount;
+    }
+
+}
+
+class Computer extends  Players{
+    Random rand = new Random();
+    int randomRow, randomCol;
+
+    // Constructor
+    Computer(int playerNumber, String playerColor, int playerC){
+        super(playerNumber, playerColor, playerC);
+    }
+
+    // Randomly selecting row
+    public int selectRow(){
+        randomRow = rand.nextInt(8);
+        return randomRow;
+    }
+
+    // Randomly selecting column
+    public int selectCol(){
+        randomCol = rand.nextInt(8);
+        return randomCol;
+    }
+
+}
+
+class Human extends Players{
+    int selectedRow, selectedCol;
+
+    // Constructor
+    Human(int playerNumber, String playerColor, int playerC){
+        super(playerNumber, playerColor, playerC);
+    }
+
+    // Randomly selecting row
+    public int selectRow(){
+        System.out.println("Select a row: ");
+        selectedRow = input.nextInt();
+        return selectedRow;
+    }
+
+    // Randomly selecting column
+    public int selectCol(){
+        System.out.println("Select a column: ");
+        selectedCol = input.nextInt();
+        return selectedCol;
+    }
+}
