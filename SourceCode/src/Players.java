@@ -70,14 +70,14 @@ class Human extends Players{
         super(playerNumber, playerColor, playerC);
     }
 
-    // Randomly selecting row
+    // Prompt user to select a row and set selectedRow accordingly
     public int selectRow(){
         System.out.println("Select a row: ");
         selectedRow = input.nextInt();
         return selectedRow;
     }
 
-    // Randomly selecting column
+    // Prompt user to select a column and set selectedCol accordingly
     public int selectCol(){
         System.out.println("Select a column: ");
         selectedCol = input.nextInt();

@@ -33,7 +33,7 @@ public class Game {
 
 
         /*
-         * Initial interaction using scanner: gets inut from user as to whether they should start the game or not.
+         * Initial interaction using scanner: gets input from user as to whether they should start the game or not.
          */
         String YorN = "";
         System.out.println("Welcome to Othello! \nYou will be playing: Human vs. Computer. \nPress Y to continue and N to exit game:");

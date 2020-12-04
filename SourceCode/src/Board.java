@@ -72,65 +72,135 @@ public class Board {
             return -1;
 
         }
-        //make sure the intended add isn't to a disconnected square
-        boolean adjacents = checkAdjacents(row, col);
-        if (!adjacents) {
+        //attempt to make the move
+        boolean successful = attemptMove(row, col, color);
+        //return -1 if move was unsuccessful (i.e. invalid add location)
+        if (!successful) {
             return -1;
         }
-
-        //the intended add is valid, so set the board at the given location to the given color
+        //move was successful, so update the color at that location
         board[col][row] = color;
         return 0;
     }
 
 
     /*
-     * private method to check all squares that are adjacent to the specified location
-     * if no adjacent squares are found to be occupied, return false; otherwise, return true
-     */
-    private boolean checkAdjacents(int row, int col) {
-        boolean adjacent = false; //assume there are no adjacent occupied squares until one is found
-        //make sure the specified square is adjacent to one that's already occupied (all surrounding squares can't be 0)
-        for (int i = row - 1; i < row + 2; i++) {
-            for (int j = col - 1; j < col + 2; j++) {
-                if (board[i][j] != 0) {
-                    adjacent = true;
-                }
-            }
-        }
-        return adjacent;
-    }
-
-    /*
-     *  This method checks if there are any acceptable moves for the player to make.
-     *  otherwise, the game would be over.
-      */
-    public boolean validMovesLeft(String color) {
-        if(0==0){ // check if the player who's color it is can make any more moves
-            return true;
-        }else {
-            return false;
-        }
-    }
-
-
-
-    /*
      * this method isn't finished/functional yet, but is intended to flip all of the occupied squares in a row
      * of the opposite color in between your color and the move you just made
      */
-    public void flipInsides(int row, int col, int color) {
+    public boolean attemptMove(int row, int col, int color) {
+        int oppositeColor;
+        boolean adjacents = false; //assume there is not a valid move
+        if (color == 1) {
+            oppositeColor = 2;
+        }
+        else {
+            oppositeColor = 1;
+        }
         for (int i = row - 1; i < row + 2; i++) {
             for (int j = col - 1; j < col + 2; j++) {
                 //adjacent square of opposite color
-                while (board[i][j] != 0 && board[i][j] != color) {
-                    flip(i, j);
+                if (board[i][j] == oppositeColor) {
+                    boolean isValid = scanDirection(row, col, i, j, color);
+                    if (isValid) {
+                        adjacents = true;
+                        flipLine(row, col, i, j, color);
+                    }
 
                 }
             }
         }
-
+        return adjacents;
     }
+
+
+    /*
+     * RECURSIVE ALGORITHM: continue searching in one direction. This uses (I think?) recurrence function... DIVIDE & CONQUER
+     * scan every point in the line from point (row, col) in the direction of (i,j) until reaching color.
+     * If color is never reached, return false. Otherwise, flip all the points in between (row, col) and color
+     */
+    public boolean scanDirection(int row, int col, int i, int j, int color){
+        //base case 1: have reached end of board so return false
+        if (i < 0 || j < 0) {
+            return false;
+        }
+        //base case 2: have hit color so return true
+        else if (board[i][j] == color) {
+            return true;
+        }
+        //base case 3: have hit an empty square so return false
+        else if (board[i][j] == 0) {
+            return false;
+        }
+        //if you haven't hit a base case, recursively call function until you do
+        else if (i < row) { //search left
+            i--;
+            if (j < col) { //search left up
+                j--;
+            }
+            if (j > col) { //search left down
+                j++;
+            }
+            return scanDirection(row, col, i, j, color);
+        }
+        else if (i > row) { //search right
+            i++;
+            if (j < col) { //search right up
+                j--;
+            }
+            if (j > col) { //search right down
+                j++;
+            }
+            return scanDirection(row, col, i, j, color);
+        }
+        else { //search vertically
+            if (j < col) {
+                j--; //search up
+            }
+            if (j > col) { //search down
+                j++;
+            }
+            return scanDirection(row, col, i, j, color);
+        }
+    }
+
+
+    /*
+     * flip consecutive colors in a given line until the opposite color is reached
+     */
+    public void flipLine(int row, int col, int i, int j, int color) {
+        //continue flipping in a line until color is reached
+        while (board[i][j] != color) {
+            flip(i, j);
+            if (i < row) { //iterate left
+                i--;
+                if (j < col) { //left up
+                    j--;
+                }
+                if (j > col) { //left down
+                    j++;
+                }
+            }
+            else if (i > row) { //iterate right
+                i++;
+                if (j < col) { //right up
+                    j--;
+                }
+                if (j > col) { //right down
+                    j++;
+                }
+            }
+            else { //iterate vertically
+                if (j < col) {
+                    j--; //up
+                }
+                if (j > col) { //search down
+                    j++;
+                }
+            }
+        }
+    }
+
 
     /*
      * private method flip is called by flipInsides. It simply switches (flips over) an occupied square from one color
@@ -145,7 +215,11 @@ public class Board {
         }
     }
 
+
     /*
+    * eliz note: I think currently this is only checking the 8 spots that form a square around the given spot and
+    * returning true if any of them are empty ...
+    * -----
     * private method that returns true if the board has empty spots left on the board.
     * otherwise, it returns false.
     */
@@ -159,6 +233,19 @@ public class Board {
             }
         }
         return false;
+    }
+
+
+    /*
+     *  This method checks if there are any acceptable moves for the player to make.
+     *  otherwise, the game would be over.
+     */
+    public boolean validMovesLeft(String color) {
+        if(0==0){ // check if the player who's color it is can make any more moves
+            return true;
+        }else {
+            return false;
+        }
     }
 
 
