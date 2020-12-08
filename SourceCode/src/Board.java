@@ -45,8 +45,8 @@ public class Board {
      * printBoard prints the current state of the board, printing 0 for empty squares, b for black, w for white
      */
     public void printBoard() {
-        for (int i = 0; i < 8; i++) { //for each row
-            for (int j = 0; j < 8; j++) { //for each column
+        for (int j = 0; j < 8; j++) { //for each row
+            for (int i = 0; i < 8; i++) { //for each column
                 if (board[i][j] == 1) { //print 'w' for white squares
                     System.out.print("w ");
                 }
@@ -79,7 +79,7 @@ public class Board {
             return -1;
         }
         //move was successful, so update the color at that location
-        board[col][row] = color;
+        board[row][col] = color;
         return 0;
     }
 
@@ -97,16 +97,24 @@ public class Board {
         else {
             oppositeColor = 1;
         }
-        for (int i = row - 1; i < row + 2; i++) {
-            for (int j = col - 1; j < col + 2; j++) {
-                //adjacent square of opposite color
-                if (board[i][j] == oppositeColor) {
-                    boolean isValid = scanDirection(row, col, i, j, color);
-                    if (isValid) {
-                        adjacents = true;
-                        flipLine(row, col, i, j, color);
-                    }
+        if (row == 0 || col == 0 || row == 7 || col == 7) {
+            boolean isValid = handleEdge(row, col, color); //handle move attempts at the edge of the board
+            if (isValid) {
+                adjacents = true;
+            }
+        }
+        else { //not an edge, so check all surrounding spots
+            for (int i = row - 1; i < row + 2; i++) {
+                for (int j = col - 1; j < col + 2; j++) {
+                    //adjacent square of opposite color
+                    if (board[i][j] == oppositeColor) {
+                        boolean isValid = scanDirection(row, col, i, j, color);
+                        if (isValid) {
+                            adjacents = true;
+                            flipLine(row, col, i, j, color);
+                        }
 
+                    }
                 }
             }
         }
@@ -172,6 +180,7 @@ public class Board {
         //continue flipping in a line until color is reached
         while (board[i][j] != color) {
             flip(i, j);
+            System.out.println("Flipping: (" + i + ", " + j + ")");
             if (i < row) { //iterate left
                 i--;
                 if (j < col) { //left up
@@ -213,6 +222,150 @@ public class Board {
         else if (board[row][col] == 2) {
             board[row][col] = 1;
         }
+    }
+
+
+    /*
+     * given a row, col, and color, checks which edge the spot is and scans appropriate directions according to edge location
+     * if scanDirection returns true, it will then call flipLine in the same direction and set madeFlip to true
+     * returns true if at least 1 flip was ever made (false otherwise)
+     */
+    public boolean handleEdge (int row, int col, int color) {
+        boolean isValid;
+        boolean madeFlip = false;
+        int oppositeColor;
+        if (color == 1) {
+            oppositeColor = 2;
+        }
+        else {
+            oppositeColor = 1;
+        }
+        if (col == 0) { //top edge of board
+            if (row == 0) { //top left corner case
+               if (board[0][1] == oppositeColor) {
+                   isValid = scanDirection(row, col, 0, 1, color);
+                   if (isValid) {
+                       flipLine(row, col, 0, 1, color);
+                       madeFlip = true;
+                   }
+               }
+               if (board[1][1] == oppositeColor) {
+                   isValid = scanDirection(row, col, 1, 1, color);
+                   if (isValid) {
+                       flipLine(row, col, 1, 1, color);
+                       madeFlip = true;
+                   }
+               }
+                if (board[1][0] == oppositeColor) {
+                    isValid = scanDirection(row, col, 1, 0, color);
+                    if (isValid) {
+                        flipLine(row, col, 1, 0, color);
+                        madeFlip = true;
+                    }
+                }
+            }
+            else if (row == 7) { //top right corner case
+                if (board[6][0] == oppositeColor) {
+                    isValid = scanDirection(row, col, 6, 0, color);
+                    if (isValid) {
+                        flipLine(row, col, 6, 0, color);
+                        madeFlip = true;
+                    }
+                }
+                if (board[6][1] == oppositeColor) {
+                    isValid = scanDirection(row, col, 6, 1, color);
+                    if (isValid) {
+                        flipLine(row, col, 6, 1, color);
+                        madeFlip = true;
+                    }
+                }
+                if (board[7][1] == oppositeColor) {
+                    isValid = scanDirection(row, col, 7, 1, color);
+                    if (isValid) {
+                        flipLine(row, col, 7, 1, color);
+                        madeFlip = true;
+                    }
+                }
+            }
+            else {
+                isValid = scanDirection(row, col, row, col + 1, color);
+                if (isValid) {
+                    flipLine(row, col, row, col + 1, color);
+                    madeFlip = true;
+                }
+            }
+        }
+        else if (col == 7) { //bottom edge of board
+            if (row == 0) { //bottom left corner case
+                if (board[0][6] == oppositeColor) {
+                    isValid = scanDirection(row, col, 0, 6, color);
+                    if (isValid) {
+                        flipLine(row, col, 0, 6, color);
+                        madeFlip = true;
+                    }
+                }
+                if (board[1][6] == oppositeColor) {
+                    isValid = scanDirection(row, col, 1, 6, color);
+                    isValid = scanDirection(row, col, 0, 6, color);
+                    if (isValid) {
+                        flipLine(row, col, 1, 6, color);
+                        madeFlip = true;
+                    }
+                }
+                if (board[1][7] == oppositeColor) {
+                    isValid = scanDirection(row, col, 1, 7, color);
+                    if (isValid) {
+                        flipLine(row, col, 1, 7, color);
+                        madeFlip = true;
+                    }
+                }
+            }
+            else if (row == 7) { //bottom right corner case
+                if (board[6][7] == oppositeColor) {
+                    isValid = scanDirection(row, col, 6, 7, color);
+                    if (isValid) {
+                        flipLine(row, col, 6, 7, color);
+                        madeFlip = true;
+                    }
+                }
+                if (board[6][6] == oppositeColor) {
+                    isValid = scanDirection(row, col, 6, 6, color);
+                    if (isValid) {
+                        flipLine(row, col, 6, 6, color);
+                        madeFlip = true;
+                    }
+                }
+                if (board[7][6] == oppositeColor) {
+                    isValid = scanDirection(row, col, 7, 6, color);
+                    if (isValid) {
+                        flipLine(row, col, 7, 6, color);
+                        madeFlip = true;
+                    }
+                }
+            }
+            else {
+                isValid = scanDirection(row, col, row, col + 1, color);
+                if (isValid) {
+                    flipLine(row, col, row, col + 1, color);
+                    madeFlip = true;
+                }
+            }
+        }
+        else if (row == 0) { //left edge (corner cases already considered
+            isValid = scanDirection(row, col, row + 1, col, color);
+            if (isValid) {
+                flipLine(row, col, row + 1, col, color);
+                madeFlip = true;
+            }
+        }
+        else { //right edge
+            isValid = scanDirection(row, col, row - 1, col, color);
+            if (isValid) {
+                flipLine(row, col, row - 1, col, color);
+                madeFlip = true;
+            }
+        }
+        return madeFlip;
     }
 
 
