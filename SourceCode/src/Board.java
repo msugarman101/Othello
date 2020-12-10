@@ -54,7 +54,7 @@ public class Board {
                     System.out.print("w ");
                 }
                 else { //otherwise, print 0 for empty
-                    System.out.print("0 ");
+                    System.out.print("_ ");
                 }
             }
             System.out.println(); //print a new line in between rows
@@ -129,7 +129,7 @@ public class Board {
      */
     public boolean scanDirection(int row, int col, int i, int j, int color){
         //base case 1: have reached end of board so return false
-        if (i < 0 || j < 0) {
+        if (i < 0 || j < 0 || i > 7 || j > 7) {
             return false;
         }
         //base case 2: have hit color so return true
@@ -146,7 +146,7 @@ public class Board {
             if (j < col) { //search left up
                 j--;
             }
-            if (j > col) { //search left down
+            else if (j > col) { //search left down
                 j++;
             }
             return scanDirection(row, col, i, j, color);
@@ -156,7 +156,7 @@ public class Board {
             if (j < col) { //search right up
                 j--;
             }
-            if (j > col) { //search right down
+            else if (j > col) { //search right down
                 j++;
             }
             return scanDirection(row, col, i, j, color);
@@ -165,7 +165,7 @@ public class Board {
             if (j < col) {
                 j--; //search up
             }
-            if (j > col) { //search down
+            else if (j > col) { //search down
                 j++;
             }
             return scanDirection(row, col, i, j, color);
@@ -180,13 +180,13 @@ public class Board {
         //continue flipping in a line until color is reached
         while (board[i][j] != color) {
             flip(i, j);
-            System.out.println("\n     Flipping: (" + i + ", " + j + ")");
+            System.out.println("\n     Flipping: (" + i + ", " + (7 -j) + ")");
             if (i < row) { //iterate left
                 i--;
                 if (j < col) { //left up
                     j--;
                 }
-                if (j > col) { //left down
+                else if (j > col) { //left down
                     j++;
                 }
             }
@@ -195,7 +195,7 @@ public class Board {
                 if (j < col) { //right up
                     j--;
                 }
-                if (j > col) { //right down
+                else if (j > col) { //right down
                     j++;
                 }
             }
@@ -203,7 +203,7 @@ public class Board {
                 if (j < col) {
                     j--; //up
                 }
-                if (j > col) { //search down
+                else if (j > col) { //search down
                     j++;
                 }
             }
@@ -287,11 +287,18 @@ public class Board {
                     }
                 }
             }
-            else {
-                isValid = scanDirection(row, col, row + 1, col + 1, color);
-                if (isValid) {
-                    flipLine(row, col, row + 1, col + 1, color);
-                    madeFlip = true;
+            else { //anything else on the top row
+                for (int i = row - 1; i < row + 2; i++) {
+                    for (int j = col; j < col + 2; j++) {
+                        if (board[i][j] == oppositeColor) {
+                            isValid = scanDirection(row, col, i, j, color);
+                            if (isValid) {
+                                flipLine(row, col, i, j, color);
+                                madeFlip = true;
+                            }
+
+                        }
+                    }
                 }
             }
         }
@@ -306,7 +313,6 @@ public class Board {
                 }
                 if (board[1][6] == oppositeColor) {
                     isValid = scanDirection(row, col, 1, 6, color);
-                    isValid = scanDirection(row, col, 0, 6, color);
                     if (isValid) {
                         flipLine(row, col, 1, 6, color);
                         madeFlip = true;
@@ -344,25 +350,46 @@ public class Board {
                 }
             }
             else {
-                isValid = scanDirection(row, col, row, col - 1, color);
-                if (isValid) {
-                    flipLine(row, col, row, col - 1, color);
-                    madeFlip = true;
+                for (int i = row - 1; i < row + 2; i++) {
+                    for (int j = col - 1; j < col + 1; j++) {
+                        if (board[i][j] == oppositeColor) {
+                            isValid = scanDirection(row, col, i, j, color);
+                            if (isValid) {
+                                flipLine(row, col, i, j, color);
+                                madeFlip = true;
+                            }
+
+                        }
+                    }
                 }
             }
         }
         else if (row == 0) { //left edge (corner cases already considered
-            isValid = scanDirection(row, col, row + 1, col, color);
-            if (isValid) {
-                flipLine(row, col, row + 1, col, color);
-                madeFlip = true;
+            for (int i = row ; i < row + 2; i++) {
+                for (int j = col - 1; j < col + 2; j++) {
+                    if (board[i][j] == oppositeColor) {
+                        isValid = scanDirection(row, col, i, j, color);
+                        if (isValid) {
+                            flipLine(row, col, i, j, color);
+                            madeFlip = true;
+                        }
+
+                    }
+                }
             }
         }
         else { //right edge
-            isValid = scanDirection(row, col, row - 1, col, color);
-            if (isValid) {
-                flipLine(row, col, row - 1, col, color);
-                madeFlip = true;
+            for (int i = row - 1 ; i < row + 1; i++) {
+                for (int j = col - 1; j < col + 2; j++) {
+                    if (board[i][j] == oppositeColor) {
+                        isValid = scanDirection(row, col, i, j, color);
+                        if (isValid) {
+                            flipLine(row, col, i, j, color);
+                            madeFlip = true;
+                        }
+
+                    }
+                }
             }
         }
         return madeFlip;
@@ -370,22 +397,33 @@ public class Board {
 
 
     /*
-    * eliz note: I think currently this is only checking the 8 spots that form a square around the given spot and
-    * returning true if any of them are empty ...
-    * -----
-    * private method that returns true if the board has empty spots left on the board.
-    * otherwise, it returns false.
-    */
-    private boolean hasEmptySpots(int row, int col) {
-        for (int i = row - 1; i < row + 2; i++) {
-            for (int j = col - 1; j < col + 2; j++) {
-                // should place empty spots on the board
-                if(board[i][j] == 0){
-                    return true;
+     * loops through board and determines winner
+     * returns 1 if black wins, 2 if white wins, and 0 if tie
+     */
+    public int getWinner() {
+        int winner;
+        int numBlacks = 0;
+        int numWhites = 0;
+        for (int j = 0; j < 8; j++) { //for each row
+            for (int i = 0; i < 8; i++) { //for each column
+                if (board[i][j] == 1) { //if square is black, increment count number of blacks
+                    numBlacks++;
+                }
+                else if (board[i][j] == 2) { //if square is white, increment count number of whites
+                    numWhites++;
                 }
             }
         }
-        return false;
+        if (numBlacks > numWhites) {
+            winner = 1;
+        }
+        else if (numWhites > numBlacks) {
+            winner = 2;
+        }
+        else {
+            winner = 0; //indicates a tie
+        }
+        return winner;
     }
 
 

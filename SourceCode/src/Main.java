@@ -45,9 +45,9 @@ public class Main {
             if(color == 2){ // PLAYER 2's turn
                 System.out.print("PLAYER 2's TURN [WHITE]: ");
             }
-            System.out.print("\n     Enter the row of desired move [BETWEEN 0 AND 7]: ");
+            System.out.print("\n     Enter the x-coordinate of desired move [BETWEEN 0 AND 7]: ");
             int row = input.nextInt();
-            System.out.print("\n     Enter the column of desired move [BETWEEN 0 AND 7]: ");
+            System.out.print("\n     Enter the y-coordinate of desired move [BETWEEN 0 AND 7]: ");
             int col = input.nextInt();
             col = 7 - col;
             add = board.add(row, col, color);
@@ -75,8 +75,17 @@ public class Main {
             System.out.println();
 
         }
-
-        //calculateWinner method here
+        int winner = board.getWinner();
+        System.out.println("-- GAME OVER --");
+        if (winner == 1) {
+            System.out.println("Player 2 [Black] WINS!");
+        }
+        else if (winner == 2) {
+            System.out.println("Player 1 [White] WINS!");
+        }
+        else {
+            System.out.println("Tie game!");
+        }
     }
 }
 
