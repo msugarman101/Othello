@@ -36,7 +36,9 @@ public class Main {
         board.printBoard();
         System.out.println();
 
-        while (true) { // PLAYER 1's turn
+        int playsleft = 60;
+
+        while (playsleft > 0) { // PLAYER 1's turn
             if(color == 1){
                 System.out.print("PLAYER 1's TURN [BLACK]: ");
             }
@@ -68,10 +70,13 @@ public class Main {
                 } else{
                     color = 1;
                 }
+                playsleft --;
             }
             System.out.println();
 
         }
+
+        //calculateWinner method here
     }
 }
 
