@@ -34,10 +34,10 @@ public class Board {
             }
         }
         //next, set up the four inner most squares appropriately
-        board[3][3] = 1; //black
-        board[3][4] = 2; //white -- showing as black... ~ need to fix
-        board[4][3] = 2; //white
-        board[4][4] = 1; //black
+        board[3][3] = 2; //white
+        board[3][4] = 1; //black
+        board[4][3] = 1; //black
+        board[4][4] = 2; //white
     }
 
 
@@ -288,9 +288,9 @@ public class Board {
                 }
             }
             else {
-                isValid = scanDirection(row, col, row, col + 1, color);
+                isValid = scanDirection(row, col, row + 1, col + 1, color);
                 if (isValid) {
-                    flipLine(row, col, row, col + 1, color);
+                    flipLine(row, col, row + 1, col + 1, color);
                     madeFlip = true;
                 }
             }
@@ -344,9 +344,9 @@ public class Board {
                 }
             }
             else {
-                isValid = scanDirection(row, col, row, col + 1, color);
+                isValid = scanDirection(row, col, row, col - 1, color);
                 if (isValid) {
-                    flipLine(row, col, row, col + 1, color);
+                    flipLine(row, col, row, col - 1, color);
                     madeFlip = true;
                 }
             }

@@ -47,29 +47,30 @@ public class Main {
             int row = input.nextInt();
             System.out.print("\n     Enter the column of desired move [BETWEEN 0 AND 7]: ");
             int col = input.nextInt();
+            col = 7 - col;
             add = board.add(row, col, color);
-            if (add == -1) {
+            if (add == -1) { //note: should prompt same player to move again if unsuccessful
                 System.out.println("          .\n          .\n          .\n     Unsuccessful add: invalid move \n");
             }
             else {
                 System.out.println("          .\n          .\n          .\n     Successful add! New board state \n");
-                player[color].addPlayerCount();
+                //player[color].addPlayerCount();
 
-                System.out.println("     Player " + color +" has now flipped a total of " + player[color].getPlayerCount() + " pieces \n ");
+                //System.out.println("     Player " + color +" has now flipped a total of " + player[color].getPlayerCount() + " pieces \n ");
                 // right now player count only flips 1 piece; need to figure out that if more than 1 piece is flipped how to tell how many pieces were flipped
 
 
                 System.out.println("---UPDATED BOARD---");
                 board.printBoard();
+                // Swapping turns
+                if(color == 1){
+                    color = 2;
+                } else{
+                    color = 1;
+                }
             }
             System.out.println();
 
-            // Swapping turns
-            if(color == 1){
-                color = 2;
-            } else{
-                color = 1;
-            }
         }
     }
 }
