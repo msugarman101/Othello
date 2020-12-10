@@ -18,10 +18,10 @@ public class Players {
     }
 
     // Constructor
-    Players(int playerNum,  String playerCol, int playerC) {
+    Players(int playerNum,  String playerCol, int playerCounter) {
         playerNumber= playerNum;
         playerColor= playerCol;
-        playerCount = playerC;
+        playerCount = playerCounter;
     }
 
     public String getPlayerColor(){
@@ -29,13 +29,15 @@ public class Players {
     }
 
 
-    public void addPlayerCount(int playerC){
-        playerCount += playerC;
+    public void addPlayerCount(){
+        playerCount += 1;
     }
 
     public int getPlayerCount(){
         return playerCount;
     }
+
+
 
 }
 

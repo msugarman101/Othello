@@ -34,10 +34,10 @@ public class Board {
             }
         }
         //next, set up the four inner most squares appropriately
-        board[3][3] = 1; //white
-        board[3][4] = 2; //black
-        board[4][3] = 2; //black
-        board[4][4] = 1; //white
+        board[3][3] = 1; //black
+        board[3][4] = 2; //white -- showing as black... ~ need to fix
+        board[4][3] = 2; //white
+        board[4][4] = 1; //black
     }
 
 
@@ -47,11 +47,11 @@ public class Board {
     public void printBoard() {
         for (int j = 0; j < 8; j++) { //for each row
             for (int i = 0; i < 8; i++) { //for each column
-                if (board[i][j] == 1) { //print 'w' for white squares
-                    System.out.print("w ");
-                }
-                else if (board[i][j] == 2) { //print 'b' for black squares
+                if (board[i][j] == 1) { //print 'b' for black squares
                     System.out.print("b ");
+                }
+                else if (board[i][j] == 2) { //print 'w' for white squares
+                    System.out.print("w ");
                 }
                 else { //otherwise, print 0 for empty
                     System.out.print("0 ");
@@ -180,7 +180,7 @@ public class Board {
         //continue flipping in a line until color is reached
         while (board[i][j] != color) {
             flip(i, j);
-            System.out.println("Flipping: (" + i + ", " + j + ")");
+            System.out.println("\n     Flipping: (" + i + ", " + j + ")");
             if (i < row) { //iterate left
                 i--;
                 if (j < col) { //left up

@@ -27,7 +27,7 @@ public class Game {
         // Creating players
         player = new Players[2]; // Declaring the players
             player[0] = new Computer(1, "B", 0);
-            player[1] = new Human(2, "W", 0);
+            player[1] = new Human(2, "b", 0);
 
         int selectedRow, selectedCol;
 
