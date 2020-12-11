@@ -39,42 +39,39 @@ public class Main {
 
             int playsleft = 60;
 
-            while (playsleft > 0 || input.next().equals("F")) {
+            String forfiet = "N";
 
-                 if (color == 1) {
+            while (playsleft > 0 && ! (forfiet.equals("Y"))) {
+                if (color == 1) {
                         System.out.print("PLAYER 1's TURN [BLACK]: ");
+                }
+                if (color == 2) { // PLAYER 2's turn
+                    System.out.print("PLAYER 2's TURN [WHITE]: ");
+                }
+                System.out.print("\n     Enter x-coordinate and y-coordinate [Press 'enter' after each value]: \n     ");
+                int row = input.nextInt();  // int row = input.nextInt();
+                System.out.print("\n     ");
+                int col = input.nextInt();
+                col = 7 - col;
+                add = board.add(row, col, color);
+                if (add == -1) { //note: should prompt same player to move again if unsuccessful
+                    System.out.println("          .\n          .\n          .\n     Unsuccessful add: invalid move \n");
+                    System.out.println("Out of moves? Type 'Y' to forfiet the game, or 'N' to continue: ");
+                    forfiet = input.next();
+                }
+                else {
+                    System.out.println("          .\n          .\n          .\n     Successful add! New board state \n");
+                    System.out.println("---UPDATED BOARD---");
+                    board.printBoard();
+                    // Swapping turns
+                    if (color == 1) {
+                        color = 2;
                     }
-                    if (color == 2) { // PLAYER 2's turn
-                        System.out.print("PLAYER 2's TURN [WHITE]: ");
+                    else {
+                        color = 1;
                     }
-//            System.out.print("\n     Enter the x-coordinate of desired move [BETWEEN 0 AND 7]: ");
-                    System.out.print("\n     Enter x-coordinate and y-coordinate [Press 'enter' after each value]: \n     ");
-                    int row = input.nextInt();  // int row = input.nextInt();
-                    System.out.print("\n     ");
-//            System.out.print("\n     Enter the y-coordinate of desired move [BETWEEN 0 AND 7]: ");
-                    int col = input.nextInt();
-                    col = 7 - col;
-                    add = board.add(row, col, color);
-                    if (add == -1) { //note: should prompt same player to move again if unsuccessful
-                        System.out.println("          .\n          .\n          .\n     Unsuccessful add: invalid move \n");
-                    } else {
-                        System.out.println("          .\n          .\n          .\n     Successful add! New board state \n");
-                        //player[color].addPlayerCount();
-
-                        //System.out.println("     Player " + color +" has now flipped a total of " + player[color].getPlayerCount() + " pieces \n ");
-                        // right now player count only flips 1 piece; need to figure out that if more than 1 piece is flipped how to tell how many pieces were flipped
-
-
-                        System.out.println("---UPDATED BOARD---");
-                        board.printBoard();
-                        // Swapping turns
-                        if (color == 1) {
-                            color = 2;
-                        } else {
-                            color = 1;
-                        }
-                        playsleft--;
-                    }
+                    playsleft--;
+                }
             }
 
 
@@ -88,50 +85,7 @@ public class Main {
                 System.out.println("Tie game!");
             }
             System.out.println("---FLIPS---");
-            System.out.println("   BLACK [PLAYER 1]: " + player[1].getFlipCount());
-            System.out.println("   WHITE [PLAYER 2]: " + player[2].getFlipCount());
+            System.out.println("   BLACK [PLAYER 1]: " + player[0].getFlipCount());
+            System.out.println("   WHITE [PLAYER 2]: " + player[1].getFlipCount());
     }
 }
-
-/*
-do {
-            forfeit = input.next();
-            System.out.println("Please press q to quit");
-            }while (forfeit != "f" || forfeit !="F") {
-            System.out.println();
-            System.out.println("Player " + color + " has forfeited this game");
-            }
-
-            still firuging out the forfeit!
- */
-
-
-
-
-
-
-/*
-hile (true) {
-            System.out.print("Pick your player: please select Player 1 [White] or Player 2 [Black]): ");
-            int color = input.nextInt();
-            System.out.println("\n     YOU HAVE SELECTED PLAYER " + color);
-            System.out.print("\n     Enter the row of desired move [BETWEEN 1 AND 6]: ");
-            int row = input.nextInt();
-            System.out.print("\n     Enter the column of desired move [BETWEEN 1 AND 6]: ");
-            int col = input.nextInt();
-            System.out.println();
-            int add = board.add(row, col, color);
-            if (add == -1) {
-                System.out.println("  -->Unsuccessful add: invalid move \n");
-            }
-            else {
-                System.out.println("  -->Successful add! New board state \n");
-                board.printBoard();
-            }
-            System.out.println();
-        }
-
-    }
-}
-
- */

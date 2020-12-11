@@ -126,7 +126,7 @@ public class Board {
 
 
     /*
-     * RECURSIVE ALGORITHM: continue searching in one direction. This uses (I think?) recurrence function... DIVIDE & CONQUER
+     * RECURSIVE ALGORITHM: continue searching in one direction. This uses a recurrence function... DIVIDE & CONQUER
      * scan every point in the line from point (row, col) in the direction of (i,j) until reaching color.
      * If color is never reached, return false. Otherwise, flip all the points in between (row, col) and color
      */
@@ -431,19 +431,4 @@ public class Board {
         }
         return winner;
     }
-
-
-    /*
-     *  This method checks if there are any acceptable moves for the player to make.
-     *  otherwise, the game would be over.
-     */
-    public boolean validMovesLeft(String color) {
-        if(0==0){ // check if the player who's color it is can make any more moves
-            return true;
-        }else {
-            return false;
-        }
-    }
-
-
 }
