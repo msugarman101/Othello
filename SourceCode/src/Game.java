@@ -32,11 +32,13 @@ public class Game {
         int selectedRow, selectedCol;
 
 
+
+
         /*
          * Initial interaction using scanner: gets input from user as to whether they should start the game or not.
          */
         String YorN = "";
-        System.out.println("Welcome to Othello! \nYou will be playing: Human vs. Computer. \nPress Y to continue and N to exit game:");
+        System.out.println("Welcome to Othello! \nYou will be playing a 2 person human game, meaning HUMAN vs. HUMAN. \nPress Y to continue and N to exit game:");
         YorN = input.next();
         if(!YorN.equalsIgnoreCase("Y") || !YorN.equalsIgnoreCase("N")){ //XZ
             System.out.println("NOT YES OR NOT NO");
@@ -56,9 +58,6 @@ public class Game {
         else{ // Y
             System.out.println("YES");
         }
-
-
-
 
         int currentPlayer = 1;
         String currentPlayerColor = "B";
