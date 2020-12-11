@@ -221,12 +221,12 @@ public class Board {
     private void flip(int row, int col) {
         if (board[row][col] == 1) {
             board[row][col] = 2;
-            player[2].addFlipCount(); // [PLAYER 2] White claims the black item
+            player[1].addFlipCount(); // [PLAYER 2] White claims the black item
 
         }
         else if (board[row][col] == 2) {
             board[row][col] = 1;
-            player[1].addFlipCount(); // [PLAYER 1] black claims the white item
+            player[0].addFlipCount(); // [PLAYER 1] black claims the white item
         }
     }
 
