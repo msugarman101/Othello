@@ -13,8 +13,8 @@ public class Main {
         int color = 1, add = 1; // "COLOR" also tell whos turn it is
         Players player[];
         player = new Players[2]; // Declaring the players
-        player[0] = new Computer(1, "b", 0);
-        player[1] = new Human(2, "w", 0);
+        player[0] = new Players(1, "b", 0, 0);
+        player[1] = new Players(2, "w", 0, 0);
 
 
         // the following is elizabeth's testing of board class ... feel free to remove
@@ -87,7 +87,11 @@ public class Main {
             } else {
                 System.out.println("Tie game!");
             }
-        }
+            System.out.println("---FLIPS---");
+            System.out.println("   BLACK [PLAYER 1]: " + player[1].getFlipCount());
+            System.out.println("   WHITE [PLAYER 2]: " + player[2].getFlipCount());
+
+    }
 }
 
 

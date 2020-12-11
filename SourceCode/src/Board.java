@@ -10,8 +10,7 @@ public class Board {
     // Attributes: every Board object has a physical 8x8 board as well as a current winner
     private int board[][];
     private String currentWinner;
-
-
+    public Players player[];
 
     /*
      * Constructor: construct a Board object
@@ -19,6 +18,10 @@ public class Board {
     public Board() {
         board = new int[8][8]; //allocate board
         currentWinner = "TIE"; //initialize currentWinner to be a tie
+
+        player = new Players[2]; // Declaring the players
+        player[0] = new Players(1, "b", 0, 0);
+        player[1] = new Players(2, "w", 0, 0);
     }
 
 
@@ -218,9 +221,12 @@ public class Board {
     private void flip(int row, int col) {
         if (board[row][col] == 1) {
             board[row][col] = 2;
+            player[2].addFlipCount(); // [PLAYER 2] White claims the black item
+
         }
         else if (board[row][col] == 2) {
             board[row][col] = 1;
+            player[1].addFlipCount(); // [PLAYER 1] black claims the white item
         }
     }
 

@@ -7,82 +7,44 @@
 import java.util.*;
 
 public class Players {
-    int playerNumber, playerCount;
+    int playerNumber, playerCount, playerFlipCount;
     String playerColor;
 
     Scanner input = new Scanner(System.in);
 
     // Default constructor
     Players() {
-        playerCount= 0;
+        playerCount = 0;
+        playerFlipCount = 0;
     }
 
     // Constructor
-    Players(int playerNum,  String playerCol, int playerCounter) {
-        playerNumber= playerNum;
-        playerColor= playerCol;
+    Players(int playerNum, String playerCol, int playerCounter, int playerFlipC) {
+        playerNumber = playerNum;
+        playerColor = playerCol;
         playerCount = playerCounter;
+        playerFlipCount = playerFlipC;
     }
 
-    public String getPlayerColor(){
+    public String getPlayerColor() {
         return playerColor;
     }
 
 
-    public void addPlayerCount(){
+    public void addPlayerCount() {
         playerCount += 1;
     }
 
-    public int getPlayerCount(){
+    public int getPlayerCount() {
         return playerCount;
     }
 
-
-
-}
-
-class Computer extends  Players{
-    Random rand = new Random();
-    int randomRow, randomCol;
-
-    // Constructor
-    Computer(int playerNumber, String playerColor, int playerC){
-        super(playerNumber, playerColor, playerC);
+    public void addFlipCount() {
+        playerFlipCount += 1;
     }
 
-    // Randomly selecting row
-    public int selectRow(){
-        randomRow = rand.nextInt(8);
-        return randomRow;
-    }
-
-    // Randomly selecting column
-    public int selectCol(){
-        randomCol = rand.nextInt(8);
-        return randomCol;
-    }
-
-}
-
-class Human extends Players{
-    int selectedRow, selectedCol;
-
-    // Constructor
-    Human(int playerNumber, String playerColor, int playerC){
-        super(playerNumber, playerColor, playerC);
-    }
-
-    // Prompt user to select a row and set selectedRow accordingly
-    public int selectRow(){
-        System.out.println("Select a row: ");
-        selectedRow = input.nextInt();
-        return selectedRow;
-    }
-
-    // Prompt user to select a column and set selectedCol accordingly
-    public int selectCol(){
-        System.out.println("Select a column: ");
-        selectedCol = input.nextInt();
-        return selectedCol;
+    public int getFlipCount() {
+        return playerFlipCount;
     }
 }
+
