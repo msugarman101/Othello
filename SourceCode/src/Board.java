@@ -11,6 +11,7 @@ public class Board {
     private int board[][];
     private String currentWinner;
     public Players player[];
+    int blackFlips = 0, whiteFlips = 0;
 
     /*
      * Constructor: construct a Board object
@@ -183,7 +184,7 @@ public class Board {
         //continue flipping in a line until color is reached
         while (board[i][j] != color) {
             flip(i, j);
-            System.out.println("\n     Flipping: (" + i + ", " + (7 -j) + ")");
+            System.out.print("     Flipping: (" + i + ", " + (7 -j) + ")     ");
             if (i < row) { //iterate left
                 i--;
                 if (j < col) { //left up
@@ -430,5 +431,9 @@ public class Board {
             winner = 0; //indicates a tie
         }
         return winner;
+    }
+
+    public void getFlips(){
+
     }
 }

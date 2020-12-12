@@ -10,11 +10,6 @@ public class Main {
     public static void main(String[] args) {
         int color = 1, add = 1; // "COLOR" also tell whos turn it is
         String forfeit = "F";
-        Players player[];
-        player = new Players[2]; // Declaring the players
-        player[0] = new Players(1, "b", 0, 0);
-        player[1] = new Players(2, "w", 0, 0);
-
 
         // the following is elizabeth's testing of board class ... feel free to remove
 
@@ -50,17 +45,17 @@ public class Main {
                 }
                 System.out.print("\n     Enter x-coordinate and y-coordinate [Press 'enter' after each value]: \n     ");
                 int row = input.nextInt();  // int row = input.nextInt();
-                System.out.print("\n     ");
+                System.out.print("     ");
                 int col = input.nextInt();
                 col = 7 - col;
                 add = board.add(row, col, color);
                 if (add == -1) { //note: should prompt same player to move again if unsuccessful
-                    System.out.println("          .\n          .\n          .\n     Unsuccessful add: invalid move \n");
-                    System.out.println("Out of moves? Type 'Y' to forfiet the game, or 'N' to continue: ");
+                    System.out.println("          ...      Unsuccessful add: invalid move \n");
+                    System.out.println("     Out of moves? Type 'Y' to forfiet the game, or 'N' to continue: ");
                     forfiet = input.next();
                 }
                 else {
-                    System.out.println("          .\n          .\n          .\n     Successful add! New board state \n");
+                    System.out.println("          ...     Successful add! New board state \n");
                     System.out.println("---UPDATED BOARD---");
                     board.printBoard();
                     // Swapping turns
@@ -85,7 +80,5 @@ public class Main {
                 System.out.println("Tie game!");
             }
             System.out.println("---FLIPS---");
-            System.out.println("   BLACK [PLAYER 1]: " + player[0].getFlipCount());
-            System.out.println("   WHITE [PLAYER 2]: " + player[1].getFlipCount());
     }
 }
