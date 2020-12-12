@@ -11,7 +11,7 @@ public class Board {
     private int board[][];
     private String currentWinner;
     public Players player[];
-    int blackFlips = 0, whiteFlips = 0;
+    private int blackFlips = 0, whiteFlips = 0;
 
     /*
      * Constructor: construct a Board object
@@ -222,12 +222,13 @@ public class Board {
     private void flip(int row, int col) {
         if (board[row][col] == 1) {
             board[row][col] = 2;
-            player[1].addFlipCount(); // [PLAYER 2] White claims the black item
+            whiteFlips++;
 
         }
         else if (board[row][col] == 2) {
             board[row][col] = 1;
             player[0].addFlipCount(); // [PLAYER 1] black claims the white item
+            blackFlips++;
         }
     }
 
@@ -433,7 +434,11 @@ public class Board {
         return winner;
     }
 
-    public void getFlips(){
-
+    public int getBlackFlips(){
+        return blackFlips;
     }
+    public int getWhiteFlips(){
+        return whiteFlips;
+    }
+
 }

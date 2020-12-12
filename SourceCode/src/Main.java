@@ -80,5 +80,7 @@ public class Main {
                 System.out.println("Tie game!");
             }
             System.out.println("---FLIPS---");
+        System.out.println("Total white flips: " + board.getWhiteFlips());
+        System.out.println("Total black flips: " + board.getBlackFlips());
     }
 }
