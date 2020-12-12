@@ -50,12 +50,12 @@ public class Main {
                 col = 7 - col;
                 add = board.add(row, col, color);
                 if (add == -1) { //note: should prompt same player to move again if unsuccessful
-                    System.out.println("          ...      Unsuccessful add: invalid move \n");
+                    System.out.println("\n     ...      Unsuccessful add: invalid move \n");
                     System.out.println("     Out of moves? Type 'Y' to forfiet the game, or 'N' to continue: ");
                     forfiet = input.next();
                 }
                 else {
-                    System.out.println("          ...     Successful add! New board state \n");
+                    System.out.println("\n     ...     Successful add! New board state \n");
                     System.out.println("---UPDATED BOARD---");
                     board.printBoard();
                     // Swapping turns
